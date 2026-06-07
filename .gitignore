@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+env/
+
+.DS_Store
+Thumbs.db
+
+output/
+data/processed/
+
+# Keep source datasets out of Git unless you explicitly want to version them.
+data/raw/kaggle/
+
