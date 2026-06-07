@@ -147,25 +147,43 @@ Examples:
 python -m pip install -r requirements.txt
 ```
 
-### 2. Preprocess the raw data
+### 2. Run the main pipeline
 
 ```powershell
-python -u "src/preprocess.py"
+python main.py
 ```
 
-### 3. Build the Knowledge Graph
+This runs:
+
+1. preprocessing
+2. graph construction
+3. reasoning
+
+### 3. Run a single pipeline step if needed
 
 ```powershell
-python -u "src/build_graph.py"
+python main.py preprocess
+python main.py build-graph
+python main.py reasoning
 ```
 
-### 4. Run reasoning
+### 4. Run the optional embeddings workflow
+
+If you want embeddings and similarity search:
 
 ```powershell
-python -u "src/reasoning.py"
+python main.py embeddings
+python main.py all-with-embeddings
+python main.py similar-players "Tom Rothe"
 ```
+
+`embeddings` expects the main graph to already exist.
+
+`all-with-embeddings` runs the full core pipeline first, then the embeddings workflow.
 
 ### 5. Run scouting queries
+
+After `python main.py` finishes, the graph is ready for queries.
 
 Examples:
 
@@ -175,13 +193,25 @@ python -u "src/queries/query_hidden_talents.py"
 python -u "src/queries/query_talents_by_position.py"
 ```
 
-### 6. Optional: run the embedding pipeline
+### 6. Optional: run the embedding scripts directly
 
 ```powershell
 python -u "src/embeddings/export_triples.py"
 python -u "src/embeddings/train_transe.py"
 python -u "src/embeddings/query_similar_players.py" "Tom Rothe"
 ```
+
+### 7. Verify the pipeline output
+
+You can do a quick verification by:
+
+* checking that [output/football_talent_kg.ttl](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/output/football_talent_kg.ttl) exists
+* checking that [data/processed/players_with_standings.csv](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/data/processed/players_with_standings.csv) exists
+* running one of the query scripts and confirming it prints results
+
+For a more explicit runbook, see:
+
+* [USAGE.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/USAGE.md)
 
 ---
 
@@ -207,13 +237,14 @@ Important output files:
 
 More details are available in:
 
-* [docs/ontology.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/ontology.md)
-* [docs/rules.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/rules.md)
-* [docs/kg_architecture.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/kg_architecture.md)
-* [docs/kg_evolution.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/kg_evolution.md)
-* [docs/data_model_comparison.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/data_model_comparison.md)
-* [docs/kg_ml_ai_connection.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/kg_ml_ai_connection.md)
-* [docs/kg_embeddings.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/kg_embeddings.md)
+* [docs/concepts/ontology.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/ontology.md)
+* [docs/concepts/rules.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/rules.md)
+* [docs/concepts/kg_architecture.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/kg_architecture.md)
+* [docs/concepts/kg_evolution.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/kg_evolution.md)
+* [docs/analysis/data_model_comparison.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/analysis/data_model_comparison.md)
+* [docs/concepts/kg_ml_ai_connection.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/kg_ml_ai_connection.md)
+* [docs/concepts/kg_embeddings.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/kg_embeddings.md)
+* [USAGE.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/USAGE.md)
 
 ---
 

@@ -31,17 +31,13 @@ def preprocess():
     print(f"Players loaded: {len(players)}")
     print(f"Standings loaded: {len(standings)}")
 
-    # =====================================
     # League Normalization
-    # =====================================
 
     players["League"] = players["Comp"].map(
         LEAGUE_MAP
     )
 
-    # =====================================
     # Merge Player Data + Team Standings
-    # =====================================
 
     merged = players.merge(
         standings,
@@ -56,9 +52,7 @@ def preprocess():
         }
     )
 
-    # =====================================
     # Feature Engineering
-    # =====================================
 
     print("Creating derived features...")
 
@@ -97,9 +91,7 @@ def preprocess():
         / minutes_played
     )
 
-    # =====================================
     # Validation
-    # =====================================
 
     print("\nValidation Results")
 
@@ -116,9 +108,7 @@ def preprocess():
         f"Missing ranks: {missing_ranks}"
     )
 
-    # =====================================
     # Save Processed Dataset
-    # =====================================
 
     merged.to_csv(
         PROCESSED_FILE,

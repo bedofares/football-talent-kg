@@ -19,7 +19,7 @@ The ontology separates:
 
 ## Ontology Diagram
 
-![Football Talent Knowledge Graph Ontology](ontology-diagram.png)
+![Football Talent Knowledge Graph Ontology](../assets/ontology-diagram.png)
 
 **Figure 1.** Ontology of the Football Talent Knowledge Graph, including core entities, relationships, position hierarchy, and inferred talent classes.
 

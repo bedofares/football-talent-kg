@@ -9,6 +9,11 @@ if str(SRC_DIR) not in sys.path:
 
 from config import PROCESSED_FILE
 
-df = pd.read_csv(PROCESSED_FILE, encoding="utf-8")
 
-print(df.columns.tolist())
+def main() -> None:
+    df = pd.read_csv(PROCESSED_FILE, encoding="utf-8")
+    print(df.columns.tolist())
+
+
+if __name__ == "__main__":
+    main()

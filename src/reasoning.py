@@ -1,8 +1,7 @@
 import sys
 from pathlib import Path
 
-from rdflib import Graph, Namespace, RDF, Literal
-from rdflib.namespace import XSD
+from rdflib import Graph, Namespace, RDF
 
 SRC_DIR = Path(__file__).resolve().parent
 if str(SRC_DIR) not in sys.path:
@@ -34,8 +33,7 @@ GK_THRESHOLD = 76.52
 # Minimum playing-time requirements
 #
 # Outfield players need at least 10 full matches.
-# Goalkeepers need at least 3 full matches because young goalkeepers
-# generally accumulate fewer first-team minutes.
+# Goalkeepers need at least 3 full matches because young goalkeepers generally accumulate fewer first-team minutes.
 MIN_90S = 10
 GK_MIN_90S = 3
 MAX_YOUNG_AGE = 21

@@ -9,24 +9,28 @@ if str(SRC_DIR) not in sys.path:
 
 from config import PROCESSED_FILE
 
-df = pd.read_csv(PROCESSED_FILE)
 
-duplicates = (
-    df.groupby("Player")
-      .size()
-      .reset_index(name="Count")
-)
+def main() -> None:
+    df = pd.read_csv(PROCESSED_FILE)
+    duplicates = (
+        df.groupby("Player")
+        .size()
+        .reset_index(name="Count")
+    )
 
-duplicates = duplicates[
-    duplicates["Count"] > 1
-]
+    duplicates = duplicates[
+        duplicates["Count"] > 1
+    ]
 
-print(f"Players with multiple rows: {len(duplicates)}")
+    print(f"Players with multiple rows: {len(duplicates)}")
+    print("\nTop examples:\n")
+    print(
+        duplicates.sort_values(
+            "Count",
+            ascending=False
+        ).head(20)
+    )
 
-print("\nTop examples:\n")
-print(
-    duplicates.sort_values(
-        "Count",
-        ascending=False
-    ).head(20)
-)
+
+if __name__ == "__main__":
+    main()

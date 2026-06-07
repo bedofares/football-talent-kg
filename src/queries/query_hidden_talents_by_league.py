@@ -1,21 +1,14 @@
 import sys
 from pathlib import Path
 
-from rdflib import Graph
-
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8")
-
 SRC_DIR = Path(__file__).resolve().parents[1]
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
 from config import GRAPH_FILE
+from runtime import configure_stdout, load_graph
 
-graph = Graph()
-graph.parse(GRAPH_FILE, format="turtle")
-
-query = """
+QUERY = """
 PREFIX kg: <http://example.org/football-talent-kg/>
 
 SELECT DISTINCT ?league ?name ?position ?team
@@ -32,15 +25,23 @@ WHERE {
 ORDER BY ?league ?team ?name ?position
 """
 
-results = graph.query(query)
 
-print("===== HIDDEN TALENTS BY LEAGUE =====")
+def main() -> None:
+    configure_stdout()
+    graph = load_graph(GRAPH_FILE)
+    results = graph.query(QUERY)
 
-current_league = None
+    print("===== HIDDEN TALENTS BY LEAGUE =====")
 
-for row in results:
-    if row.league != current_league:
-        current_league = row.league
-        print(f"\n{current_league}")
+    current_league = None
 
-    print(f"{row.name} | {row.position} | {row.team}")
+    for row in results:
+        if row.league != current_league:
+            current_league = row.league
+            print(f"\n{current_league}")
+
+        print(f"{row.name} | {row.position} | {row.team}")
+
+
+if __name__ == "__main__":
+    main()

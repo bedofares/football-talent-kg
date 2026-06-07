@@ -9,24 +9,7 @@ if str(SRC_DIR) not in sys.path:
 
 from config import PROCESSED_FILE
 
-df = pd.read_csv(PROCESSED_FILE, encoding="utf-8")
-
-print("\n========================")
-print("DATASET OVERVIEW")
-print("========================")
-
-print(f"Rows: {len(df)}")
-print(f"Columns: {len(df.columns)}")
-
-print("\nColumns:")
-for col in df.columns:
-    print(col)
-
-# ----------------------------
-# Basic statistics
-# ----------------------------
-
-interesting_columns = [
+INTERESTING_COLUMNS = [
     "Age",
     "90s",
     "Gls",
@@ -34,89 +17,77 @@ interesting_columns = [
     "TklW",
     "Int",
     "Save%",
-    "StandingsRk"
+    "StandingsRk",
 ]
 
-for column in interesting_columns:
-    print(f"\n===== {column} =====")
-    print(df[column].describe())
 
-# ----------------------------
-# Position distribution
-# ----------------------------
+def main() -> None:
+    df = pd.read_csv(PROCESSED_FILE, encoding="utf-8")
 
-print("\n========================")
-print("POSITION DISTRIBUTION")
-print("========================")
+    print("\n========================")
+    print("DATASET OVERVIEW")
+    print("========================")
+    print(f"Rows: {len(df)}")
+    print(f"Columns: {len(df.columns)}")
 
-print(df["Pos"].value_counts().head(20))
+    print("\nColumns:")
+    for column in df.columns:
+        print(column)
 
-# ----------------------------
-# Age distribution
-# ----------------------------
+    for column in INTERESTING_COLUMNS:
+        print(f"\n===== {column} =====")
+        print(df[column].describe())
 
-print("\n========================")
-print("AGE DISTRIBUTION")
-print("========================")
+    print("\n========================")
+    print("POSITION DISTRIBUTION")
+    print("========================")
+    print(df["Pos"].value_counts().head(20))
 
-print(df["Age"].value_counts().sort_index())
+    print("\n========================")
+    print("AGE DISTRIBUTION")
+    print("========================")
+    print(df["Age"].value_counts().sort_index())
 
-# ----------------------------
-# Top scorers
-# ----------------------------
+    print("\n========================")
+    print("TOP GOAL SCORERS")
+    print("========================")
+    print(
+        df[["Player", "Squad", "Age", "Gls"]]
+        .sort_values("Gls", ascending=False)
+        .head(20)
+    )
 
-print("\n========================")
-print("TOP GOAL SCORERS")
-print("========================")
+    print("\n========================")
+    print("TOP ASSISTS")
+    print("========================")
+    print(
+        df[["Player", "Squad", "Age", "Ast"]]
+        .sort_values("Ast", ascending=False)
+        .head(20)
+    )
 
-print(
-    df[["Player", "Squad", "Age", "Gls"]]
-    .sort_values("Gls", ascending=False)
-    .head(20)
-)
+    df["DefActions"] = df["TklW"].fillna(0) + df["Int"].fillna(0)
 
-# ----------------------------
-# Top assist providers
-# ----------------------------
+    print("\n========================")
+    print("TOP DEFENSIVE ACTIONS")
+    print("========================")
+    print(
+        df[["Player", "Squad", "Age", "DefActions"]]
+        .sort_values("DefActions", ascending=False)
+        .head(20)
+    )
 
-print("\n========================")
-print("TOP ASSISTS")
-print("========================")
+    gks = df[df["Pos"].str.contains("GK", na=False)]
 
-print(
-    df[["Player", "Squad", "Age", "Ast"]]
-    .sort_values("Ast", ascending=False)
-    .head(20)
-)
+    print("\n========================")
+    print("TOP GOALKEEPERS")
+    print("========================")
+    print(
+        gks[["Player", "Squad", "Age", "Save%"]]
+        .sort_values("Save%", ascending=False)
+        .head(20)
+    )
 
-# ----------------------------
-# Best defenders
-# ----------------------------
 
-df["DefActions"] = df["TklW"].fillna(0) + df["Int"].fillna(0)
-
-print("\n========================")
-print("TOP DEFENSIVE ACTIONS")
-print("========================")
-
-print(
-    df[["Player", "Squad", "Age", "DefActions"]]
-    .sort_values("DefActions", ascending=False)
-    .head(20)
-)
-
-# ----------------------------
-# Goalkeepers
-# ----------------------------
-
-gks = df[df["Pos"].str.contains("GK", na=False)]
-
-print("\n========================")
-print("TOP GOALKEEPERS")
-print("========================")
-
-print(
-    gks[["Player", "Squad", "Age", "Save%"]]
-    .sort_values("Save%", ascending=False)
-    .head(20)
-)
+if __name__ == "__main__":
+    main()
