@@ -104,11 +104,17 @@ def query_similar_players(player_name: str, top_k: int = 5):
     with KGE_ENTITY_TO_ID_FILE.open("r", encoding="utf-8") as file:
         entity_to_id = json.load(file)
 
-    embeddings = torch.load(
-        KGE_ENTITY_EMBEDDINGS_FILE,
-        map_location="cpu",
-        weights_only=True,
-    )
+    try:
+        embeddings = torch.load(
+            KGE_ENTITY_EMBEDDINGS_FILE,
+            map_location="cpu",
+            weights_only=True,
+        )
+    except TypeError:
+        embeddings = torch.load(
+            KGE_ENTITY_EMBEDDINGS_FILE,
+            map_location="cpu",
+        )
 
     player_lookup, entity_to_name = load_player_lookup(graph)
 

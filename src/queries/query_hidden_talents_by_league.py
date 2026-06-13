@@ -11,7 +11,7 @@ from runtime import configure_stdout, load_graph
 QUERY = """
 PREFIX kg: <http://example.org/football-talent-kg/>
 
-SELECT DISTINCT ?league ?name ?position ?team
+SELECT ?league ?name (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions) ?team
 WHERE {
     ?player a kg:HiddenTalent .
     ?player kg:hasName ?name .
@@ -22,7 +22,8 @@ WHERE {
     ?teamNode kg:playsInLeague ?leagueNode .
     ?leagueNode kg:hasName ?league .
 }
-ORDER BY ?league ?team ?name ?position
+GROUP BY ?player ?league ?name ?team
+ORDER BY ?league ?team ?name
 """
 
 
@@ -40,7 +41,7 @@ def main() -> None:
             current_league = row.league
             print(f"\n{current_league}")
 
-        print(f"{row.name} | {row.position} | {row.team}")
+        print(f"{row.name} | {row.positions} | {row.team}")
 
 
 if __name__ == "__main__":
