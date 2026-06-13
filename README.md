@@ -38,6 +38,39 @@ Then it:
 
 ---
 
+## Data Sources
+
+This project uses two data sources.
+
+1. **Football Players Stats 2025/2026** from Kaggle:
+   https://www.kaggle.com/datasets/hubertsidorowicz/football-players-stats-2025-2026
+
+   The player CSV should be placed at:
+
+   ```text
+   data/raw/kaggle/players_data_light-2025_2026.csv
+   ```
+
+2. **Team standings from FBRef**
+
+   The standings data was collected from FBRef using `ScraperFC`, because the required league tables were not available as a direct CSV download.
+
+   The scraper is located at:
+
+   ```text
+   src/data_collection/fetch_standings.py
+   ```
+
+   It creates:
+
+   ```text
+   data/raw/standings.csv
+   ```
+
+   The scraped leagues are Premier League, La Liga, Bundesliga, Serie A, and Ligue 1 for the 2025/2026 season.
+
+---
+
 ## Project Flow
 
 The full flow is:
@@ -113,29 +146,29 @@ Examples:
 
 ### Core pipeline
 
-* [src/preprocess.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/preprocess.py)
+* [src/preprocess.py](src/preprocess.py)
   cleans, merges, and enriches the raw data
 
-* [src/build_graph.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/build_graph.py)
+* [src/build_graph.py](src/build_graph.py)
   builds the RDF Knowledge Graph
 
-* [src/reasoning.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/reasoning.py)
+* [src/reasoning.py](src/reasoning.py)
   applies rule-based reasoning to infer talent classes
 
 ### Scouting queries
 
-* [src/queries/query_all_talents.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/queries/query_all_talents.py)
-* [src/queries/query_talents_by_position.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/queries/query_talents_by_position.py)
-* [src/queries/query_talents_by_league.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/queries/query_talents_by_league.py)
-* [src/queries/query_hidden_talents.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/queries/query_hidden_talents.py)
-* [src/queries/query_hidden_talents_by_position.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/queries/query_hidden_talents_by_position.py)
-* [src/queries/query_hidden_talents_by_league.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/queries/query_hidden_talents_by_league.py)
+* [src/queries/query_all_talents.py](src/queries/query_all_talents.py)
+* [src/queries/query_talents_by_position.py](src/queries/query_talents_by_position.py)
+* [src/queries/query_talents_by_league.py](src/queries/query_talents_by_league.py)
+* [src/queries/query_hidden_talents.py](src/queries/query_hidden_talents.py)
+* [src/queries/query_hidden_talents_by_position.py](src/queries/query_hidden_talents_by_position.py)
+* [src/queries/query_hidden_talents_by_league.py](src/queries/query_hidden_talents_by_league.py)
 
 ### Embeddings
 
-* [src/embeddings/export_triples.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/embeddings/export_triples.py)
-* [src/embeddings/train_transe.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/embeddings/train_transe.py)
-* [src/embeddings/query_similar_players.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/embeddings/query_similar_players.py)
+* [src/embeddings/export_triples.py](src/embeddings/export_triples.py)
+* [src/embeddings/train_transe.py](src/embeddings/train_transe.py)
+* [src/embeddings/query_similar_players.py](src/embeddings/query_similar_players.py)
 
 ---
 
@@ -205,13 +238,13 @@ python -u "src/embeddings/query_similar_players.py" "Tom Rothe"
 
 You can do a quick verification by:
 
-* checking that [output/football_talent_kg.ttl](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/output/football_talent_kg.ttl) exists
-* checking that [data/processed/players_with_standings.csv](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/data/processed/players_with_standings.csv) exists
+* checking that [output/football_talent_kg.ttl](output/football_talent_kg.ttl) exists
+* checking that [data/processed/players_with_standings.csv](data/processed/players_with_standings.csv) exists
 * running one of the query scripts and confirming it prints results
 
 For a more explicit runbook, see:
 
-* [USAGE.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/USAGE.md)
+* [USAGE.md](USAGE.md)
 
 ---
 
@@ -220,16 +253,16 @@ For a more explicit runbook, see:
 Important output files:
 
 * processed data:
-  [data/processed/players_with_standings.csv](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/data/processed/players_with_standings.csv)
+  [data/processed/players_with_standings.csv](data/processed/players_with_standings.csv)
 
 * Knowledge Graph:
-  [output/football_talent_kg.ttl](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/output/football_talent_kg.ttl)
+  [output/football_talent_kg.ttl](output/football_talent_kg.ttl)
 
 * embedding training triples:
-  [data/processed/kg_triples.tsv](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/data/processed/kg_triples.tsv)
+  [data/processed/kg_triples.tsv](data/processed/kg_triples.tsv)
 
 * embedding artifacts:
-  [output/transe_model](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/output/transe_model)
+  [output/transe_model](output/transe_model)
 
 ---
 
@@ -237,14 +270,14 @@ Important output files:
 
 More details are available in:
 
-* [docs/concepts/ontology.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/ontology.md)
-* [docs/concepts/rules.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/rules.md)
-* [docs/concepts/kg_architecture.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/kg_architecture.md)
-* [docs/concepts/kg_evolution.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/kg_evolution.md)
-* [docs/analysis/data_model_comparison.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/analysis/data_model_comparison.md)
-* [docs/concepts/kg_ml_ai_connection.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/kg_ml_ai_connection.md)
-* [docs/concepts/kg_embeddings.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/docs/concepts/kg_embeddings.md)
-* [USAGE.md](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/USAGE.md)
+* [docs/concepts/ontology.md](docs/concepts/ontology.md)
+* [docs/concepts/rules.md](docs/concepts/rules.md)
+* [docs/concepts/kg_architecture.md](docs/concepts/kg_architecture.md)
+* [docs/concepts/kg_evolution.md](docs/concepts/kg_evolution.md)
+* [docs/analysis/data_model_comparison.md](docs/analysis/data_model_comparison.md)
+* [docs/concepts/kg_ml_ai_connection.md](docs/concepts/kg_ml_ai_connection.md)
+* [docs/concepts/kg_embeddings.md](docs/concepts/kg_embeddings.md)
+* [USAGE.md](USAGE.md)
 
 ---
 

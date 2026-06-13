@@ -85,9 +85,9 @@ python -u "src/queries/query_hidden_talents_by_league.py"
 Minimum verification:
 
 1. Confirm the processed dataset exists:
-   [data/processed/players_with_standings.csv](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/data/processed/players_with_standings.csv)
+   [data/processed/players_with_standings.csv](data/processed/players_with_standings.csv)
 2. Confirm the graph exists:
-   [output/football_talent_kg.ttl](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/output/football_talent_kg.ttl)
+   [output/football_talent_kg.ttl](output/football_talent_kg.ttl)
 3. Run a query and confirm it prints player results.
 
 Better verification:

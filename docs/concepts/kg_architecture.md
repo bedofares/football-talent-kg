@@ -26,7 +26,7 @@ These files provide the factual input for the system.
 
 ### 2. Preprocessing Layer
 
-Implemented in [src/preprocess.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/preprocess.py).
+Implemented in [src/preprocess.py](../../src/preprocess.py).
 
 Responsibilities:
 
@@ -40,7 +40,7 @@ This layer performs data integration and feature creation before graph construct
 
 ### 3. Graph Construction Layer
 
-Implemented in [src/build_graph.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/build_graph.py).
+Implemented in [src/build_graph.py](../../src/build_graph.py).
 
 Responsibilities:
 
@@ -53,7 +53,7 @@ This layer converts tabular processed data into a semantic graph representation.
 
 ### 4. Reasoning Layer
 
-Implemented in [src/reasoning.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/reasoning.py).
+Implemented in [src/reasoning.py](../../src/reasoning.py).
 
 Responsibilities:
 
@@ -68,8 +68,8 @@ This layer is where the graph becomes more than a data container and starts prov
 
 Implemented in:
 
-* [src/queries](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/queries)
-* [src/validation](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/validation)
+* [src/queries](../../src/queries)
+* [src/validation](../../src/validation)
 
 Responsibilities:
 

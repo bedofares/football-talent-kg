@@ -89,9 +89,9 @@ The embedding workflow consists of three steps:
 
 Implemented files:
 
-* [src/embeddings/export_triples.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/embeddings/export_triples.py)
-* [src/embeddings/train_transe.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/embeddings/train_transe.py)
-* [src/embeddings/query_similar_players.py](D:/TU%20WIEN/Knowledge%20Graphs/football-talent-kg/src/embeddings/query_similar_players.py)
+* [src/embeddings/export_triples.py](../../src/embeddings/export_triples.py)
+* [src/embeddings/train_transe.py](../../src/embeddings/train_transe.py)
+* [src/embeddings/query_similar_players.py](../../src/embeddings/query_similar_players.py)
 
 ---
 
