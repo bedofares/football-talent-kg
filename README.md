@@ -64,7 +64,7 @@ This project uses two data sources.
    It creates:
 
    ```text
-   data/raw/standings.csv
+   data/raw/fbref/standings.csv
    ```
 
    The scraped leagues are Premier League, La Liga, Bundesliga, Serie A, and Ligue 1 for the 2025/2026 season.

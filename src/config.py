@@ -5,7 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Raw Data
 
 PLAYERS_FILE = ROOT / "data/raw/kaggle/players_data_light-2025_2026.csv"
-STANDINGS_FILE = ROOT / "data/raw/standings.csv"
+STANDINGS_FILE = ROOT / "data/raw/fbref/standings.csv"
 
 # Processed Data
 
