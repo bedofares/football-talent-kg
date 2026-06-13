@@ -1,299 +1,188 @@
-# Football Talent Knowledge Graph
+# How to Execute the KG Construction Code
 
-## Main Idea
+This README explains how to run the project code.
 
-This project builds a Knowledge Graph for football scouting.
+## 1. Required Files
 
-The goal is simple:
-
-* take football player data
-* combine it with team standings
-* build a Knowledge Graph
-* use rules to identify:
-  * young players
-  * young talented players
-  * hidden talents
-
-In short, the project tries to answer:
+The ZIP already includes the code and data needed to run the project. The
+expected structure is:
 
 ```text
-Which young football players look promising?
-Which of them may be overlooked because they play for weaker teams?
+main.py
+requirements.txt
+src/
+data/raw/fbref/standings.csv
+data/raw/kaggle/players_data_light-2025_2026.csv
 ```
 
----
-
-## What the Project Does
-
-The project starts from raw football data in CSV format.
-
-Then it:
-
-1. cleans and merges the data
-2. creates useful football features such as `GoalsPer90`
-3. builds an RDF Knowledge Graph
-4. applies reasoning rules
-5. runs scouting-style queries on the graph
-6. optionally trains embeddings for player similarity
-
----
-
-## Data Sources
-
-This project uses two data sources.
-
-1. **Football Players Stats 2025/2026** from Kaggle:
-   https://www.kaggle.com/datasets/hubertsidorowicz/football-players-stats-2025-2026
-
-   The player CSV should be placed at:
-
-   ```text
-   data/raw/kaggle/players_data_light-2025_2026.csv
-   ```
-
-2. **Team standings from FBRef**
-
-   The standings data was collected from FBRef using `ScraperFC`, because the required league tables were not available as a direct CSV download.
-
-   The scraper is located at:
-
-   ```text
-   src/data_collection/fetch_standings.py
-   ```
-
-   It creates:
-
-   ```text
-   data/raw/fbref/standings.csv
-   ```
-
-   The scraped leagues are Premier League, La Liga, Bundesliga, Serie A, and Ligue 1 for the 2025/2026 season.
-
----
-
-## Project Flow
-
-The full flow is:
+The Kaggle link is provided only for provenance and reproducibility:
 
 ```text
-Raw Football Data
-    ->
-Preprocessing
-    ->
-Processed Dataset
-    ->
-Knowledge Graph Construction
-    ->
-Reasoning
-    ->
-Talents and Hidden Talents
-    ->
-Queries and Validation
-    ->
-Optional TransE Embeddings for Similar Player Search
+https://www.kaggle.com/datasets/hubertsidorowicz/football-players-stats-2025-2026
 ```
 
----
+The included `standings.csv` file was generated from FBRef using:
 
-## What Is Inside the Graph
+```text
+src/data_collection/fetch_standings.py
+```
 
-The graph contains:
+## 2. Install Dependencies
 
-* players
-* teams
-* leagues
-* positions
-* team standing ranks
-* player performance features
+From the project root folder, install the dependencies. The package versions
+are pinned in `requirements.txt` so the project uses the same library versions
+that were tested during development.
 
-It also contains inferred classes such as:
+Using a fresh virtual environment is recommended.
 
-* `YoungPlayer`
-* `YoungTalentedPlayer`
-* `YoungTalentedForward`
-* `YoungTalentedMidfielder`
-* `YoungTalentedDefender`
-* `YoungTalentedGoalkeeper`
-* `HiddenTalent`
+On macOS/Linux, create and activate a virtual environment with:
 
-These inferred classes are created by rules, not taken directly from the source data.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
----
-
-## Why This Is Useful
-
-A normal table gives raw player statistics.
-
-This project adds more structure and meaning:
-
-* a player is connected to a team
-* a team is connected to a league
-* a player has one or more positions
-* a player can be inferred to be talented or hidden talent
-
-That makes the data easier to query in a scouting-oriented way.
-
-Examples:
-
-* show all talented defenders
-* show hidden talents by league
-* show all talents in Bundesliga
-* show players similar to a hidden talent using embeddings
-
----
-
-## Main Files
-
-### Core pipeline
-
-* [src/preprocess.py](src/preprocess.py)
-  cleans, merges, and enriches the raw data
-
-* [src/build_graph.py](src/build_graph.py)
-  builds the RDF Knowledge Graph
-
-* [src/reasoning.py](src/reasoning.py)
-  applies rule-based reasoning to infer talent classes
-
-### Scouting queries
-
-* [src/queries/query_all_talents.py](src/queries/query_all_talents.py)
-* [src/queries/query_talents_by_position.py](src/queries/query_talents_by_position.py)
-* [src/queries/query_talents_by_league.py](src/queries/query_talents_by_league.py)
-* [src/queries/query_hidden_talents.py](src/queries/query_hidden_talents.py)
-* [src/queries/query_hidden_talents_by_position.py](src/queries/query_hidden_talents_by_position.py)
-* [src/queries/query_hidden_talents_by_league.py](src/queries/query_hidden_talents_by_league.py)
-
-### Embeddings
-
-* [src/embeddings/export_triples.py](src/embeddings/export_triples.py)
-* [src/embeddings/train_transe.py](src/embeddings/train_transe.py)
-* [src/embeddings/query_similar_players.py](src/embeddings/query_similar_players.py)
-
----
-
-## How to Run the Project
-
-### 1. Install dependencies
+On Windows, create and activate a virtual environment with:
 
 ```powershell
+py -m venv .venv
+.\.venv\Scripts\activate
+```
+
+On macOS/Linux, run:
+
+```bash
 python3 -m pip install -r requirements.txt
 ```
 
-If your system uses `python` instead of `python3`, use `python` in the
-commands below.
-
-### 2. Run the main pipeline
+On Windows, run one of these commands, depending on your Python installation:
 
 ```powershell
+python -m pip install -r requirements.txt
+```
+
+or:
+
+```powershell
+py -m pip install -r requirements.txt
+```
+
+## 3. Run the Main Pipeline
+
+On macOS/Linux, run:
+
+```bash
 python3 main.py
 ```
 
-This runs:
-
-1. preprocessing
-2. graph construction
-3. reasoning
-
-### 3. Run a single pipeline step if needed
+On Windows, run one of these commands:
 
 ```powershell
-python3 main.py preprocess
-python3 main.py build-graph
-python3 main.py reasoning
+python main.py
 ```
 
-### 4. Run the optional embeddings workflow
-
-If you want embeddings and similarity search:
+or:
 
 ```powershell
+py main.py
+```
+
+This executes the construction pipeline:
+
+1. preprocesses and merges the raw datasets
+2. creates derived football features
+3. constructs the RDF Knowledge Graph
+4. applies rule-based reasoning
+
+The main output is:
+
+```text
+output/football_talent_kg.ttl
+```
+
+## 4. Run Query Examples
+
+After the pipeline finishes, run example query scripts:
+
+```bash
+python3 -u src/queries/query_all_talents.py
+python3 -u src/queries/query_hidden_talents.py
+python3 -u src/queries/query_talents_by_position.py
+python3 -u src/queries/query_talents_by_league.py
+python3 -u src/queries/query_hidden_talents_by_position.py
+python3 -u src/queries/query_hidden_talents_by_league.py
+```
+
+These scripts read `output/football_talent_kg.ttl` and print scouting results.
+
+## 5. Run the Embeddings Pipeline
+
+The project also includes a TransE embedding workflow for similar-player
+search.
+
+If the main pipeline was already executed, train the embeddings with:
+
+```bash
 python3 main.py embeddings
+```
+
+On Windows, use:
+
+```powershell
+python main.py embeddings
+```
+
+or:
+
+```powershell
+py main.py embeddings
+```
+
+Alternatively, run the full KG pipeline and embeddings together:
+
+```bash
 python3 main.py all-with-embeddings
+```
+
+Then query similar players:
+
+```bash
+python3 main.py similar-players "Lamine Yamal"
+python3 main.py similar-players "Arda Güler"
+python3 main.py similar-players "Rayan Cherki"
 python3 main.py similar-players "Tom Rothe"
 ```
 
-`embeddings` expects the main graph to already exist.
+On Windows, use `python` or `py` instead of `python3`.
 
-`all-with-embeddings` runs the full core pipeline first, then the embeddings workflow.
+## 6. Optional: Recreate the FBRef Standings File
 
-### 5. Run scouting queries
+This step is not required for normal execution because the ZIP already includes:
 
-After `python3 main.py` finishes, the graph is ready for queries.
-
-Examples:
-
-```powershell
-python3 -u "src/queries/query_all_talents.py"
-python3 -u "src/queries/query_hidden_talents.py"
-python3 -u "src/queries/query_talents_by_position.py"
+```text
+data/raw/fbref/standings.csv
 ```
 
-### 6. Optional: run the embedding scripts directly
+Only run this command if the standings file needs to be recreated:
 
-```powershell
-python3 -u "src/embeddings/export_triples.py"
-python3 -u "src/embeddings/train_transe.py"
-python3 -u "src/embeddings/query_similar_players.py" "Tom Rothe"
+```bash
+python3 -u src/data_collection/fetch_standings.py
 ```
 
-### 7. Verify the pipeline output
+This step requires internet access and depends on FBRef and `ScraperFC`.
 
-You can do a quick verification by:
+## 7. Expected Results
 
-* checking that [output/football_talent_kg.ttl](output/football_talent_kg.ttl) exists
-* checking that [data/processed/players_with_standings.csv](data/processed/players_with_standings.csv) exists
-* running one of the query scripts and confirming it prints results
+After running the core pipeline, these files should exist:
 
-For a more explicit runbook, see:
+```text
+data/processed/players_with_standings.csv
+output/football_talent_kg.ttl
+```
 
-* [USAGE.md](USAGE.md)
+If embeddings are also executed, these files/folders should exist:
 
----
-
-## Outputs
-
-Important output files:
-
-* processed data:
-  [data/processed/players_with_standings.csv](data/processed/players_with_standings.csv)
-
-* Knowledge Graph:
-  [output/football_talent_kg.ttl](output/football_talent_kg.ttl)
-
-* embedding training triples:
-  [data/processed/kg_triples.tsv](data/processed/kg_triples.tsv)
-
-* embedding artifacts:
-  [output/transe_model](output/transe_model)
-
----
-
-## Documentation
-
-More details are available in:
-
-* [docs/concepts/ontology.md](docs/concepts/ontology.md)
-* [docs/concepts/rules.md](docs/concepts/rules.md)
-* [docs/concepts/kg_architecture.md](docs/concepts/kg_architecture.md)
-* [docs/concepts/kg_evolution.md](docs/concepts/kg_evolution.md)
-* [docs/analysis/data_model_comparison.md](docs/analysis/data_model_comparison.md)
-* [docs/concepts/kg_ml_ai_connection.md](docs/concepts/kg_ml_ai_connection.md)
-* [docs/concepts/kg_embeddings.md](docs/concepts/kg_embeddings.md)
-* [USAGE.md](USAGE.md)
-
----
-
-## Short Summary
-
-This project turns football data into a Knowledge Graph for scouting.
-
-It combines:
-
-* data preprocessing
-* RDF graph construction
-* rule-based reasoning
-* scouting queries
-* optional TransE embeddings
-
-The main outcome is a graph that helps identify promising young players and hidden talents in a structured and explainable way.
+```text
+data/processed/kg_triples.tsv
+output/transe_model/
+```
