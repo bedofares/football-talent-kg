@@ -1,0 +1,7 @@
+Reasoning completed successfully
+Young players: 691
+Young talented forwards: 9
+Young talented midfielders: 23
+Young talented defenders: 13
+Young talented goalkeepers: 2
+Hidden talents: 8
