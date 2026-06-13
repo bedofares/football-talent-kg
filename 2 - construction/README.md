@@ -148,6 +148,9 @@ python3 main.py all-with-embeddings
 Then query similar players:
 
 ```bash
+python3 main.py similar-players "Lamine Yamal"
+python3 main.py similar-players "Arda Güler"
+python3 main.py similar-players "Rayan Cherki"
 python3 main.py similar-players "Tom Rothe"
 ```
 
