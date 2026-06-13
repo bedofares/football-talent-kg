@@ -9,11 +9,11 @@ This file explains what to run, in what order, and how to verify that the projec
 From the repository root:
 
 ```powershell
-python -m pip install -r requirements.txt
-python main.py
+python3 -m pip install -r requirements.txt
+python3 main.py
 ```
 
-`python main.py` is the main entry point for the project.
+`python3 main.py` is the main entry point for the project.
 
 It runs:
 
@@ -30,9 +30,9 @@ After that, the graph is ready for queries.
 If you only want one stage:
 
 ```powershell
-python main.py preprocess
-python main.py build-graph
-python main.py reasoning
+python3 main.py preprocess
+python3 main.py build-graph
+python3 main.py reasoning
 ```
 
 Use this when:
@@ -45,14 +45,14 @@ Use this when:
 
 ## Run Optional Embeddings
 
-Embeddings are optional and are not part of the default `python main.py` flow.
+Embeddings are optional and are not part of the default `python3 main.py` flow.
 
 Use:
 
 ```powershell
-python main.py embeddings
-python main.py all-with-embeddings
-python main.py similar-players "Tom Rothe"
+python3 main.py embeddings
+python3 main.py all-with-embeddings
+python3 main.py similar-players "Tom Rothe"
 ```
 
 Meaning:
@@ -61,7 +61,7 @@ Meaning:
 * `all-with-embeddings` runs the full core pipeline and then embeddings
 * `similar-players` queries the trained embedding model
 
-If you already ran `python main.py`, then `python main.py embeddings` is enough.
+If you already ran `python3 main.py`, then `python3 main.py embeddings` is enough.
 
 ---
 
@@ -70,12 +70,12 @@ If you already ran `python main.py`, then `python main.py embeddings` is enough.
 After the pipeline is ready, run query scripts such as:
 
 ```powershell
-python -u "src/queries/query_all_talents.py"
-python -u "src/queries/query_hidden_talents.py"
-python -u "src/queries/query_talents_by_position.py"
-python -u "src/queries/query_talents_by_league.py"
-python -u "src/queries/query_hidden_talents_by_position.py"
-python -u "src/queries/query_hidden_talents_by_league.py"
+python3 -u "src/queries/query_all_talents.py"
+python3 -u "src/queries/query_hidden_talents.py"
+python3 -u "src/queries/query_talents_by_position.py"
+python3 -u "src/queries/query_talents_by_league.py"
+python3 -u "src/queries/query_hidden_talents_by_position.py"
+python3 -u "src/queries/query_hidden_talents_by_league.py"
 ```
 
 ---
@@ -93,15 +93,15 @@ Minimum verification:
 Better verification:
 
 ```powershell
-python -u "src/validation/validate_graph_counts.py"
-python -u "src/validation/validate_team_matching.py"
+python3 -u "src/validation/validate_graph_counts.py"
+python3 -u "src/validation/validate_team_matching.py"
 ```
 
 You can also inspect:
 
 ```powershell
-python -u "src/validation/explore_reasoning_results.py"
-python -u "src/validation/explore_statistics.py"
+python3 -u "src/validation/explore_reasoning_results.py"
+python3 -u "src/validation/explore_statistics.py"
 ```
 
 ---
@@ -111,16 +111,16 @@ python -u "src/validation/explore_statistics.py"
 If you want player similarity search:
 
 ```powershell
-python main.py embeddings
-python main.py similar-players "Tom Rothe"
+python3 main.py embeddings
+python3 main.py similar-players "Tom Rothe"
 ```
 
 You can still run the embedding scripts directly:
 
 ```powershell
-python -u "src/embeddings/export_triples.py"
-python -u "src/embeddings/train_transe.py"
-python -u "src/embeddings/query_similar_players.py" "Tom Rothe"
+python3 -u "src/embeddings/export_triples.py"
+python3 -u "src/embeddings/train_transe.py"
+python3 -u "src/embeddings/query_similar_players.py" "Tom Rothe"
 ```
 
 This workflow is optional and not required for the core knowledge graph pipeline.

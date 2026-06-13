@@ -177,13 +177,16 @@ Examples:
 ### 1. Install dependencies
 
 ```powershell
-python -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
+
+If your system uses `python` instead of `python3`, use `python` in the
+commands below.
 
 ### 2. Run the main pipeline
 
 ```powershell
-python main.py
+python3 main.py
 ```
 
 This runs:
@@ -195,9 +198,9 @@ This runs:
 ### 3. Run a single pipeline step if needed
 
 ```powershell
-python main.py preprocess
-python main.py build-graph
-python main.py reasoning
+python3 main.py preprocess
+python3 main.py build-graph
+python3 main.py reasoning
 ```
 
 ### 4. Run the optional embeddings workflow
@@ -205,9 +208,9 @@ python main.py reasoning
 If you want embeddings and similarity search:
 
 ```powershell
-python main.py embeddings
-python main.py all-with-embeddings
-python main.py similar-players "Tom Rothe"
+python3 main.py embeddings
+python3 main.py all-with-embeddings
+python3 main.py similar-players "Tom Rothe"
 ```
 
 `embeddings` expects the main graph to already exist.
@@ -216,22 +219,22 @@ python main.py similar-players "Tom Rothe"
 
 ### 5. Run scouting queries
 
-After `python main.py` finishes, the graph is ready for queries.
+After `python3 main.py` finishes, the graph is ready for queries.
 
 Examples:
 
 ```powershell
-python -u "src/queries/query_all_talents.py"
-python -u "src/queries/query_hidden_talents.py"
-python -u "src/queries/query_talents_by_position.py"
+python3 -u "src/queries/query_all_talents.py"
+python3 -u "src/queries/query_hidden_talents.py"
+python3 -u "src/queries/query_talents_by_position.py"
 ```
 
 ### 6. Optional: run the embedding scripts directly
 
 ```powershell
-python -u "src/embeddings/export_triples.py"
-python -u "src/embeddings/train_transe.py"
-python -u "src/embeddings/query_similar_players.py" "Tom Rothe"
+python3 -u "src/embeddings/export_triples.py"
+python3 -u "src/embeddings/train_transe.py"
+python3 -u "src/embeddings/query_similar_players.py" "Tom Rothe"
 ```
 
 ### 7. Verify the pipeline output

@@ -1,4 +1,4 @@
-pandas
-rdflib
-ScraperFC
-pykeen
+pandas==2.3.3
+rdflib==7.6.0
+ScraperFC==3.4.0
+torch==2.8.0

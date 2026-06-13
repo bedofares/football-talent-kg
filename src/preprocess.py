@@ -110,6 +110,11 @@ def preprocess():
 
     # Save Processed Dataset
 
+    PROCESSED_FILE.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
     merged.to_csv(
         PROCESSED_FILE,
         index=False

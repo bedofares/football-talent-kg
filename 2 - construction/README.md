@@ -30,18 +30,62 @@ src/data_collection/fetch_standings.py
 
 ## 2. Install Dependencies
 
-From the project root folder, run:
+From the project root folder, install the dependencies. The package versions
+are pinned in `requirements.txt` so the project uses the same library versions
+that were tested during development.
+
+Using a fresh virtual environment is recommended.
+
+On macOS/Linux, create and activate a virtual environment with:
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+On Windows, create and activate a virtual environment with:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\activate
+```
+
+On macOS/Linux, run:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+On Windows, run one of these commands, depending on your Python installation:
+
+```powershell
 python -m pip install -r requirements.txt
+```
+
+or:
+
+```powershell
+py -m pip install -r requirements.txt
 ```
 
 ## 3. Run the Main Pipeline
 
-Run:
+On macOS/Linux, run:
 
 ```bash
+python3 main.py
+```
+
+On Windows, run one of these commands:
+
+```powershell
 python main.py
+```
+
+or:
+
+```powershell
+py main.py
 ```
 
 This executes the construction pipeline:
@@ -62,17 +106,54 @@ output/football_talent_kg.ttl
 After the pipeline finishes, run example query scripts:
 
 ```bash
-python -u src/queries/query_all_talents.py
-python -u src/queries/query_hidden_talents.py
-python -u src/queries/query_talents_by_position.py
-python -u src/queries/query_talents_by_league.py
-python -u src/queries/query_hidden_talents_by_position.py
-python -u src/queries/query_hidden_talents_by_league.py
+python3 -u src/queries/query_all_talents.py
+python3 -u src/queries/query_hidden_talents.py
+python3 -u src/queries/query_talents_by_position.py
+python3 -u src/queries/query_talents_by_league.py
+python3 -u src/queries/query_hidden_talents_by_position.py
+python3 -u src/queries/query_hidden_talents_by_league.py
 ```
 
 These scripts read `output/football_talent_kg.ttl` and print scouting results.
 
-## 5. Optional: Recreate the FBRef Standings File
+## 5. Run the Embeddings Pipeline
+
+The project also includes a TransE embedding workflow for similar-player
+search.
+
+If the main pipeline was already executed, train the embeddings with:
+
+```bash
+python3 main.py embeddings
+```
+
+On Windows, use:
+
+```powershell
+python main.py embeddings
+```
+
+or:
+
+```powershell
+py main.py embeddings
+```
+
+Alternatively, run the full KG pipeline and embeddings together:
+
+```bash
+python3 main.py all-with-embeddings
+```
+
+Then query similar players:
+
+```bash
+python3 main.py similar-players "Tom Rothe"
+```
+
+On Windows, use `python` or `py` instead of `python3`.
+
+## 6. Optional: Recreate the FBRef Standings File
 
 This step is not required for normal execution because the ZIP already includes:
 
@@ -83,30 +164,10 @@ data/raw/fbref/standings.csv
 Only run this command if the standings file needs to be recreated:
 
 ```bash
-python -u src/data_collection/fetch_standings.py
+python3 -u src/data_collection/fetch_standings.py
 ```
 
 This step requires internet access and depends on FBRef and `ScraperFC`.
-
-## 6. Optional: Run Knowledge Graph Embeddings
-
-To train the optional TransE embeddings:
-
-```bash
-python main.py embeddings
-```
-
-Or run the full pipeline including embeddings:
-
-```bash
-python main.py all-with-embeddings
-```
-
-Then query similar players:
-
-```bash
-python main.py similar-players "Tom Rothe"
-```
 
 ## 7. Expected Results
 
